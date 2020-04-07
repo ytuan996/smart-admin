@@ -1,5 +1,6 @@
 package com.gangquan360.smartadmin.module.employee;
 
+import com.gangquan360.smartadmin.common.anno.NoNeedLogin;
 import com.gangquan360.smartadmin.common.anno.OperateLog;
 import com.gangquan360.smartadmin.common.domain.PageResultDTO;
 import com.gangquan360.smartadmin.common.domain.ResponseDTO;
@@ -36,11 +37,19 @@ public class EmployeeController {
         return employeeService.selectEmployeeList(query);
     }
 
-    @ApiOperation(value = "添加员工", notes = "@author yandanyang")
+    @ApiOperation(value = "添加员工", notes = "添加员工")
     @PostMapping("/employee/add")
     public ResponseDTO<String> addEmployee(@Valid @RequestBody EmployeeAddDTO emp) {
         RequestTokenBO requestToken = SmartRequestTokenUtil.getRequestUser();
         return employeeService.addEmployee(emp, requestToken);
+    }
+
+    @ApiOperation(value = "注册员工", notes = "注册员工")
+    @PostMapping("/employee/register")
+    @NoNeedLogin
+    public ResponseDTO<String> registerEmployee(@Valid @RequestBody EmployeeRegisterDTO emp) {
+        RequestTokenBO requestToken = SmartRequestTokenUtil.getRequestUser();
+        return employeeService.registerEmployee(emp);
     }
 
     @ApiOperation(value = "禁用单个员工", notes = "@author yandanyang")

@@ -43,5 +43,4 @@ public enum DataScopeTypeEnum {
         return name;
     }
 
-
 }

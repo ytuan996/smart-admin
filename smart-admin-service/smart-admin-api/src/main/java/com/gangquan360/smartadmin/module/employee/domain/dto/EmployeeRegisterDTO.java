@@ -11,13 +11,13 @@ import javax.validation.constraints.Pattern;
 import java.util.List;
 
 /**
- * 添加员工
+ * comment: 个人开发用户注册数据实体
  *
- * @author lidoudou
- * @date 2017年12月19日下午2:06:31
+ * @author: ytuan996
+ * @Date : 2020/4/8 0:15
  */
 @Data
-public class EmployeeAddDTO {
+public class EmployeeRegisterDTO {
 
     @ApiModelProperty("姓名")
     @NotNull(message = "姓名不能为空")
@@ -33,10 +33,6 @@ public class EmployeeAddDTO {
     @ApiModelProperty("部门id")
     @NotNull(message = "部门id不能为空")
     private Long departmentId;
-
-    @ApiModelProperty("是否启用")
-    @NotNull(message = "是否被禁用不能为空")
-    private Integer isDisabled;
 
     @ApiModelProperty("手机号")
     @NotNull(message = "手机号不能为空")
@@ -60,5 +56,4 @@ public class EmployeeAddDTO {
     @ApiModelProperty("岗位ID 集合")
     @NotEmpty(message = "岗位ID 集合不能为空")
     private List<Long> positionIdList;
-
 }

@@ -2,26 +2,27 @@ package com.gangquan360.smartadmin.module.department;
 
 import com.gangquan360.smartadmin.common.domain.ResponseDTO;
 import com.gangquan360.smartadmin.module.department.domain.dto.DepartmentCreateDTO;
+import com.gangquan360.smartadmin.module.department.domain.dto.DepartmentRegisterDTO;
 import com.gangquan360.smartadmin.module.department.domain.dto.DepartmentUpdateDTO;
 import com.gangquan360.smartadmin.module.department.domain.dto.DepartmentVO;
 import com.gangquan360.smartadmin.module.department.domain.entity.DepartmentEntity;
 import com.gangquan360.smartadmin.module.employee.EmployeeDao;
+import com.gangquan360.smartadmin.module.employee.EmployeeService;
+import com.gangquan360.smartadmin.module.employee.domain.dto.EmployeeAddDTO;
 import com.gangquan360.smartadmin.module.employee.domain.dto.EmployeeDTO;
+import com.gangquan360.smartadmin.module.employee.domain.entity.EmployeeEntity;
 import com.gangquan360.smartadmin.util.SmartBeanUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * 部门管理业务类
+ * 公司管理业务类
  *
  * @author listen
  * @date 2017/12/19 14:25
@@ -37,6 +38,9 @@ public class DepartmentService {
 
     @Autowired
     private DepartmentTreeService departmentTreeService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     /**
      * 获取部门树形结构
@@ -64,7 +68,7 @@ public class DepartmentService {
             departmentVOList = filterDepartment(departmentVOList, departmentName);
         }
 
-        Map<Long, DepartmentVO> departmentMap = departmentVOList.stream().collect(Collectors.toMap(DepartmentVO :: getId, Function.identity()));
+        Map<Long, DepartmentVO> departmentMap = departmentVOList.stream().collect(Collectors.toMap(DepartmentVO::getId, Function.identity()));
         // 获取全部员工列表
         List<EmployeeDTO> employeeList = employeeDao.listAll();
         employeeList.forEach(employeeDTO -> {
@@ -103,7 +107,7 @@ public class DepartmentService {
                 List<DepartmentVO> filterResult = new ArrayList<>();
                 getParentDepartment(departmentVOList, parentId, filterResult);
                 for (DepartmentVO dto : filterResult) {
-                    if (! departmentMap.containsKey(dto.getId())) {
+                    if (!departmentMap.containsKey(dto.getId())) {
                         departmentMap.put(dto.getId(), dto);
                     }
                 }
@@ -137,6 +141,30 @@ public class DepartmentService {
         departmentEntity.setSort(departmentEntity.getId());
         departmentDao.updateById(departmentEntity);
         return ResponseDTO.succ();
+    }
+
+    /**
+     * 公司注册
+     *
+     * @param departmentRegisterDTO
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseDTO<String> registerDepartment(DepartmentRegisterDTO departmentRegisterDTO) {
+        // 添加超级管理员信息
+        employeeService.registerEmployee(departmentRegisterDTO.getEmployeeRegisterDTO());
+
+        // 添加公司信息
+        DepartmentEntity departmentEntity = SmartBeanUtil.copy(departmentRegisterDTO, DepartmentEntity.class);
+        departmentEntity.setSort(0L);
+        departmentEntity.setParentId(1L);
+        departmentEntity.setPhone(departmentRegisterDTO.getEmployeeRegisterDTO().getPhone());
+        departmentEntity.setMail(departmentRegisterDTO.getEmployeeRegisterDTO().getEmail());
+        departmentDao.insert(departmentEntity);
+        departmentEntity.setSort(departmentEntity.getId());
+        departmentEntity.setManagerId((employeeDao.getByLoginName(departmentRegisterDTO.getEmployeeRegisterDTO().getLoginName(), 1)).getId());
+        departmentDao.updateById(departmentEntity);
+        return ResponseDTO.succMsg("已发送邮箱，请立即激活 ");
     }
 
     /**
@@ -278,5 +306,6 @@ public class DepartmentService {
         departmentDao.updateById(departmentEntity);
         return ResponseDTO.succ();
     }
+
 
 }

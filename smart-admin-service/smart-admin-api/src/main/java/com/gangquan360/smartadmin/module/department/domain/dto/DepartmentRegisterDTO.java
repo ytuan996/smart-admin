@@ -1,5 +1,6 @@
 package com.gangquan360.smartadmin.module.department.domain.dto;
 
+import com.gangquan360.smartadmin.module.employee.domain.dto.EmployeeRegisterDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -7,14 +8,15 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotNull;
 
 /**
- * 部门添加数据实体
+ * comment: 公司注册数据实体
  *
- * @ author
- * @ date 2020/4/7 0:36
+ * @author: ytuan996
+ * @Date : 2020/4/7 22:03
  */
 @Data
-public class DepartmentCreateDTO {
+public class DepartmentRegisterDTO {
 
+    // 公司相关信息
 
     @ApiModelProperty("公司名称")
     @Length(min = 1, max = 50, message = "请输入正确的部门名称(1-50个字符)")
@@ -23,12 +25,6 @@ public class DepartmentCreateDTO {
 
     @ApiModelProperty("公司简称")
     private String shortName;
-
-    @ApiModelProperty("负责人id")
-    private Long managerId;
-
-    @ApiModelProperty("上级部门id (可选)")
-    private Long parentId;
 
     /**
      * 公司类型
@@ -52,17 +48,9 @@ public class DepartmentCreateDTO {
     @ApiModelProperty("信用代码")
     private String code;
 
-    /**
-     * 负责人电话
-     */
-    @ApiModelProperty("负责人电话")
-    private String phone;
+    // 超级用户相关信息
 
-    /**
-     * 负责人邮箱
-     */
-    @ApiModelProperty("负责人邮箱")
-    private String mail;
-
+    @ApiModelProperty("超级用户相关信息")
+    private EmployeeRegisterDTO employeeRegisterDTO;
 
 }

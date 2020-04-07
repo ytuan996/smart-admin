@@ -7,7 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 部门实体类
+ * 公司实体类
  * t_department 数据表
  *
  * @author listen
@@ -29,8 +29,9 @@ public class DepartmentEntity extends BaseEntity implements Serializable {
      */
     private String shortName;
 
+
     /**
-     * 负责人员工 id
+     * 负责人ID
      */
     private Long managerId;
 
@@ -44,5 +45,34 @@ public class DepartmentEntity extends BaseEntity implements Serializable {
      */
     private Long sort;
 
+    // TODO  新增字段
+
+    /**
+     * 公司类型
+     */
+    private String type;
+
+    /**
+     * 公司地址
+     */
+    private String addr;
+    /**
+     * 公司简介
+     */
+    private String desc;
+    /**
+     * 信用代码
+     */
+    private String code;
+
+    /**
+     * 负责人电话
+     */
+    private String phone;
+
+    /**
+     * 负责人邮箱
+     */
+    private String mail;
 
 }

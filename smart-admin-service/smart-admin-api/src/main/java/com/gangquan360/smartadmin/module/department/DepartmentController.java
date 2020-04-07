@@ -1,9 +1,11 @@
 package com.gangquan360.smartadmin.module.department;
 
+import com.gangquan360.smartadmin.common.anno.NoNeedLogin;
 import com.gangquan360.smartadmin.common.anno.OperateLog;
 import com.gangquan360.smartadmin.constant.SwaggerTagConst;
 import com.gangquan360.smartadmin.common.domain.ResponseDTO;
 import com.gangquan360.smartadmin.module.department.domain.dto.DepartmentCreateDTO;
+import com.gangquan360.smartadmin.module.department.domain.dto.DepartmentRegisterDTO;
 import com.gangquan360.smartadmin.module.department.domain.dto.DepartmentUpdateDTO;
 import com.gangquan360.smartadmin.module.department.domain.dto.DepartmentVO;
 import io.swagger.annotations.Api;
@@ -15,10 +17,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * 部门管理路由器
- *
- * @author listen
- * @date 2017/12/19 14:29
+ * @ author ytuan
+ * @ date 2020/4/7 22:26
  */
 @Api(tags = {SwaggerTagConst.Admin.MANAGER_DEPARTMENT})
 @OperateLog
@@ -52,6 +52,14 @@ public class DepartmentController {
         return departmentService.addDepartment(departmentCreateDTO);
     }
 
+
+    @ApiOperation(value = "公司注册", notes = "公司注册")
+    @PostMapping("/department/register")
+    @NoNeedLogin
+    public ResponseDTO<String> register(@Valid @RequestBody DepartmentRegisterDTO departmentRegisterDTO) {
+        return departmentService.registerDepartment(departmentRegisterDTO);
+    }
+
     @ApiOperation(value = "更新部门信息", notes = "更新部门信息")
     @PostMapping("/department/update")
     public ResponseDTO<String> updateDepartment(@Valid @RequestBody DepartmentUpdateDTO departmentUpdateDTO) {
@@ -79,8 +87,8 @@ public class DepartmentController {
 
     @ApiOperation(value = "上下移动")
     @GetMapping("/department/upOrDown/{departmentId}/{swapId}")
-    public ResponseDTO<String> upOrDown(@PathVariable("departmentId") Long departmentId,@PathVariable("swapId") Long swapId) {
-        return departmentService.upOrDown(departmentId,swapId);
+    public ResponseDTO<String> upOrDown(@PathVariable("departmentId") Long departmentId, @PathVariable("swapId") Long swapId) {
+        return departmentService.upOrDown(departmentId, swapId);
     }
 
     @ApiOperation(value = "升级")
@@ -91,8 +99,8 @@ public class DepartmentController {
 
     @ApiOperation(value = "降级")
     @GetMapping("/department/downgrade/{departmentId}/{preId}")
-    public ResponseDTO<String> downgrade(@PathVariable("departmentId") Long departmentId,@PathVariable("preId") Long preId) {
-        return departmentService.downgrade(departmentId,preId);
+    public ResponseDTO<String> downgrade(@PathVariable("departmentId") Long departmentId, @PathVariable("preId") Long preId) {
+        return departmentService.downgrade(departmentId, preId);
     }
 
 

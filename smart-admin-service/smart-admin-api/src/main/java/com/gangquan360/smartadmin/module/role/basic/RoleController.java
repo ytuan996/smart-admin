@@ -27,6 +27,12 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
+    @ApiOperation(value = "获取角色", notes = "添加角色")
+    @PostMapping("/role/get2")
+    public ResponseDTO getRole2(Long roleId) {
+        return roleService.getRoleById(roleId);
+    }
+
     @ApiOperation(value = "添加角色", notes = "添加角色")
     @PostMapping("/role/add")
     public ResponseDTO addRole(@Valid @RequestBody RoleAddDTO roleAddDTO) {
