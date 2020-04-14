@@ -1,4 +1,5 @@
 package com.gangquan360.smartadmin.module.role.basic;
+
 import com.gangquan360.smartadmin.common.anno.OperateLog;
 import com.gangquan360.smartadmin.common.domain.ResponseDTO;
 import com.gangquan360.smartadmin.constant.SwaggerTagConst;
@@ -16,8 +17,8 @@ import java.util.List;
 /**
  * 角色管理路由
  *
- * @author listen
- * @date 2017/12/28 10:10
+ * @ author ytuan
+ * @ date 2020/4/10 22:10
  */
 @Api(tags = {SwaggerTagConst.Admin.MANAGER_ROLE})
 @OperateLog

@@ -105,7 +105,7 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
         this.groupBuild();
         for (Map.Entry<String, List<String>> entry : groupMap.entrySet()) {
             String group = entry.getKey();
-            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(Docket.class, this :: baseDocket);
+            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(Docket.class, this::baseDocket);
             BeanDefinition beanDefinition = builder.getRawBeanDefinition();
             registry.registerBeanDefinition(group + "Api", beanDefinition);
         }
@@ -147,18 +147,18 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(this.serviceApiInfo())
-                .securitySchemes(securitySchemes())
+//                .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts());
     }
 
     private List<ApiKey> securitySchemes() {
-        List<ApiKey> apiKeyList= new ArrayList<>();
+        List<ApiKey> apiKeyList = new ArrayList<>();
         apiKeyList.add(new ApiKey("x-access-token", "x-access-token", "header"));
         return apiKeyList;
     }
 
     private List<SecurityContext> securityContexts() {
-        List<SecurityContext> securityContexts=new ArrayList<>();
+        List<SecurityContext> securityContexts = new ArrayList<>();
         securityContexts.add(
                 SecurityContext.builder()
                         .securityReferences(defaultAuth())
@@ -171,7 +171,7 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        List<SecurityReference> securityReferences=new ArrayList<>();
+        List<SecurityReference> securityReferences = new ArrayList<>();
         securityReferences.add(new SecurityReference("x-access-token", authorizationScopes));
         return securityReferences;
     }
@@ -210,8 +210,6 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
 
     }
-
-
 
 
 }

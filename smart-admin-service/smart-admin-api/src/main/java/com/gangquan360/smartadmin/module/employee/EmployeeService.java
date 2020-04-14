@@ -19,7 +19,9 @@ import com.gangquan360.smartadmin.module.position.PositionService;
 import com.gangquan360.smartadmin.module.position.domain.dto.PositionRelationAddDTO;
 import com.gangquan360.smartadmin.module.position.domain.dto.PositionRelationResultDTO;
 import com.gangquan360.smartadmin.module.privilege.service.PrivilegeEmployeeService;
+import com.gangquan360.smartadmin.module.role.basic.domain.dto.RoleBatchDTO;
 import com.gangquan360.smartadmin.module.role.roleemployee.RoleEmployeeDao;
+import com.gangquan360.smartadmin.module.role.roleemployee.RoleEmployeeService;
 import com.gangquan360.smartadmin.module.role.roleemployee.domain.RoleEmployeeEntity;
 import com.gangquan360.smartadmin.util.SmartBeanUtil;
 import com.gangquan360.smartadmin.util.SmartDigestUtil;
@@ -43,8 +45,8 @@ import java.util.stream.Collectors;
 /**
  * 员工管理
  *
- * @author lidoudou
- * @date 2017年12月21日上午11:54:52
+ * @ author ytuan
+ * @ date 2020/4/10 22:16
  */
 @Service
 public class EmployeeService {
@@ -65,6 +67,9 @@ public class EmployeeService {
 
     @Autowired
     private PositionDao positionDao;
+
+    @Autowired
+    private RoleEmployeeService roleEmployeeService;
 
     @Autowired
     private PrivilegeEmployeeService privilegeEmployeeService;
@@ -191,12 +196,14 @@ public class EmployeeService {
      */
     public ResponseDTO<String> registerEmployee(EmployeeRegisterDTO employeeAddDto) {
         EmployeeEntity entity = SmartBeanUtil.copy(employeeAddDto, EmployeeEntity.class);
+        // 身份证
         if (StringUtils.isNotEmpty(employeeAddDto.getIdCard())) {
             boolean checkResult = Pattern.matches(SmartVerificationUtil.ID_CARD, employeeAddDto.getIdCard());
             if (!checkResult) {
                 return ResponseDTO.wrap(EmployeeResponseCodeConst.ID_CARD_ERROR);
             }
         }
+        // 生日
         if (StringUtils.isNotEmpty(employeeAddDto.getBirthday())) {
             boolean checkResult = Pattern.matches(SmartVerificationUtil.DATE, employeeAddDto.getBirthday());
             if (!checkResult) {
@@ -213,6 +220,7 @@ public class EmployeeService {
         if (null != samePhoneEmployee) {
             return ResponseDTO.wrap(EmployeeResponseCodeConst.PHONE_EXISTS);
         }
+        // 部门是否存在
         Long departmentId = entity.getDepartmentId();
         DepartmentEntity department = departmentDao.selectById(departmentId);
         if (department == null) {
@@ -228,16 +236,18 @@ public class EmployeeService {
         }
 
         entity.setCreateUser(1L);
+
         if (StringUtils.isEmpty(entity.getBirthday())) {
             entity.setBirthday(null);
         }
         entity.setIsDisabled(1);
+
         employeeDao.insert(entity);
 
+        // 维护员工和岗位的关系
         PositionRelationAddDTO positionRelAddDTO = new PositionRelationAddDTO(employeeAddDto.getPositionIdList(), entity.getId());
         //存储所选岗位信息
         positionService.addPositionRelation(positionRelAddDTO);
-
         return ResponseDTO.succ();
     }
 

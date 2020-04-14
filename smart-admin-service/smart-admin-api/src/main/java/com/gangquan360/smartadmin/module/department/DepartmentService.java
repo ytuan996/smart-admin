@@ -10,6 +10,7 @@ import com.gangquan360.smartadmin.module.employee.EmployeeDao;
 import com.gangquan360.smartadmin.module.employee.EmployeeService;
 import com.gangquan360.smartadmin.module.employee.domain.dto.EmployeeAddDTO;
 import com.gangquan360.smartadmin.module.employee.domain.dto.EmployeeDTO;
+import com.gangquan360.smartadmin.module.employee.domain.dto.EmployeeRegisterDTO;
 import com.gangquan360.smartadmin.module.employee.domain.entity.EmployeeEntity;
 import com.gangquan360.smartadmin.util.SmartBeanUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -151,8 +152,10 @@ public class DepartmentService {
      */
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<String> registerDepartment(DepartmentRegisterDTO departmentRegisterDTO) {
+
+        EmployeeRegisterDTO employeeRegisterDTO = departmentRegisterDTO.getEmployeeRegisterDTO();
         // 添加超级管理员信息
-        employeeService.registerEmployee(departmentRegisterDTO.getEmployeeRegisterDTO());
+        employeeService.registerEmployee(employeeRegisterDTO);
 
         // 添加公司信息
         DepartmentEntity departmentEntity = SmartBeanUtil.copy(departmentRegisterDTO, DepartmentEntity.class);
@@ -161,10 +164,19 @@ public class DepartmentService {
         departmentEntity.setPhone(departmentRegisterDTO.getEmployeeRegisterDTO().getPhone());
         departmentEntity.setMail(departmentRegisterDTO.getEmployeeRegisterDTO().getEmail());
         departmentDao.insert(departmentEntity);
-        departmentEntity.setSort(departmentEntity.getId());
+
+        DepartmentEntity entity = departmentDao.selectById(departmentEntity.getParentId());
+
+        departmentEntity.setSort(entity.getId());
         departmentEntity.setManagerId((employeeDao.getByLoginName(departmentRegisterDTO.getEmployeeRegisterDTO().getLoginName(), 1)).getId());
         departmentDao.updateById(departmentEntity);
+
+        employeeRegisterDTO.setDepartmentId(entity.getId());
+
+
         return ResponseDTO.succMsg("已发送邮箱，请立即激活 ");
+
+
     }
 
     /**

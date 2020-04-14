@@ -30,6 +30,7 @@ public class DepartmentController {
 
     @ApiOperation(value = "查询部门树形列表", notes = "查询部门列表")
     @GetMapping("/department/list")
+    @NoNeedLogin
     public ResponseDTO<List<DepartmentVO>> listDepartment() {
         return departmentService.listDepartment();
     }

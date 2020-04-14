@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gangquan360.smartadmin.module.sensormodel.SensorModelDao">
+    <sql id="baseSql">
+      id,
+      sensor_name,
+      sensor_desc,
+      sensor_param,
+      is_disable,
+      is_delete,
+      create_user,
+      update_time
+    </sql>
+
+    <select id="selectByPage" resultType="com.gangquan360.smartadmin.module.sensormodel.domain.entity.SensorModelEntity">
+        select
+        <include refid="baseSql"/>
+        from
+        t_sensor_model
+        <where>
+            <if test="sensorName != null and sensorName != ''">
+                and insert (sensorName,#{sensorName})
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+
+</mapper>

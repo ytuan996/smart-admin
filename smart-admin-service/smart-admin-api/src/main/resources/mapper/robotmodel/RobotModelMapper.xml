@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gangquan360.smartadmin.module.robotmodel.basic.RobotModelDao">
+
+    <sql id="baseSql">
+        id,
+        model_name,
+        model_desc,
+        isDisable,
+        create_user,
+        create_time,
+        update_time,
+    </sql>
+  <!--  <resultMap id="robotModelResult" type="com.gangquan360.smartadmin.module.robotmodel.basic.domain.dto.RobotModelAddDTO">
+        <id column=""
+    </resultMap>-->
+    <select id="selectRobotModelList"
+            resultType="com.gangquan360.smartadmin.module.robotmodel.basic.domain.dto.RobotModelAddDTO">
+      select
+      <include refid="baseSql"/>
+        from t_robot_model trm
+        left join t_robot_model_sensor trms on trm.id = trms.model_id
+        <where>
+            <if test="queryDTO.modelName != null">
+                and trm.model_name like #{queryDTO.modelName}
+            </if>
+        </where>
+    </select>
+
+</mapper>

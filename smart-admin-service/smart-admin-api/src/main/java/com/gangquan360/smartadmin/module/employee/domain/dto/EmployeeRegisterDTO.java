@@ -31,7 +31,7 @@ public class EmployeeRegisterDTO {
     private String nickName;
 
     @ApiModelProperty("部门id")
-    @NotNull(message = "部门id不能为空")
+//    @NotNull(message = "部门id不能为空")
     private Long departmentId;
 
     @ApiModelProperty("手机号")
@@ -54,6 +54,9 @@ public class EmployeeRegisterDTO {
     private String email;
 
     @ApiModelProperty("岗位ID 集合")
-    @NotEmpty(message = "岗位ID 集合不能为空")
+//    @NotEmpty(message = "岗位ID 集合不能为空")
     private List<Long> positionIdList;
+
+/*    @ApiModelProperty("角色ID集合")
+    private List<Long> roleList;*/
 }

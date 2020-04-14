@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * Page返回对象
  *
- * @Author lihaifan
- * @Date Created in 2017/10/31 15:05
+ * @ author ytuan
+ * @ date 2020/4/10 22:14
  */
 @Data
 public class PageResultDTO<T> {

@@ -20,8 +20,8 @@ import java.util.List;
 /**
  * 员工管理
  *
- * @author lidoudou
- * @date 2017年12月19日上午11:34:52
+ * @ author ytuan
+ * @ date 2020/4/10 22:06
  */
 @RestController
 @Api(tags = {SwaggerTagConst.Admin.MANAGER_USER})
@@ -32,7 +32,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @PostMapping("/employee/query")
-    @ApiOperation(value = "员工管理查询", notes = "员工管理查询 @author lidoudou")
+    @ApiOperation(value = "员工管理查询", notes = "员工管理查询")
     public ResponseDTO<PageResultDTO<EmployeeVO>> query(@RequestBody EmployeeQueryDTO query) {
         return employeeService.selectEmployeeList(query);
     }

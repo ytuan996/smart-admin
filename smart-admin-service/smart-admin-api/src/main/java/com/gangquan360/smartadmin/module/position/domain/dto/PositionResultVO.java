@@ -6,7 +6,8 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * @author zzr
+ * @ author ytuan
+ * @ date 2020/4/10 22:28
  */
 @Data
 public class PositionResultVO {

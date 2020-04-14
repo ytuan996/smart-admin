@@ -15,11 +15,15 @@ public class SwaggerTagConst {
 
         public static final String MANAGER_USER = "管理端-用户";
 
+        public static final String MANAGER_SENSOR_MODEL = "管理端-机器人传感器模型";
+
         public static final String MANAGER_USER_LOGIN = "管理端-用户登录";
 
         public static final String MANAGER_DEPARTMENT = "管理端-部门";
 
         public static final String MANAGER_ROLE = "管理端-角色";
+
+        public static final String MANAGER_ROBOT_MODEL = "管理端-机器人模型";
 
         public static final String MANAGER_ROLE_USER = "管理端-角色用户";
 

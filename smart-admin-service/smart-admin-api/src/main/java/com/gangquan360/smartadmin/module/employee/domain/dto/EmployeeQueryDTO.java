@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * 员工列表DTO
  *
- * @author lidoudou
- * @date 2017年12月21日上午09:09:31
+ * @ author ytuan
+ * @ date 2020/4/10 22:16
  */
 @Data
 public class EmployeeQueryDTO extends PageParamDTO {
