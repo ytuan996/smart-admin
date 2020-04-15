@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * comment: 机器人传感器模型路由
@@ -55,12 +56,9 @@ public class SensorModelController {
     }
 
     // 分页查询
-    @ApiOperation(value = "分页查询所有传感器模型", notes = "分页查询所有传感器模型")
-    @GetMapping("/sensor_model/getListPage")
-    public ResponseDTO<PageResultDTO<SensorModelResultVO>> getSensorModelPage(@RequestBody @Valid SensorModelQueryDTO queryDTO) {
-        return sensorModelService.querySensorModelByPage(queryDTO);
+    @ApiOperation(value = "查询所有传感器模型", notes = "查询所有传感器模型")
+    @GetMapping("/sensor_model/get/all")
+    public ResponseDTO<List<SensorModelResultVO>> getAllSensorModel() {
+        return sensorModelService.getAllSensorModel();
     }
-
-    // 根据机器人ID分页查询
-
 }
