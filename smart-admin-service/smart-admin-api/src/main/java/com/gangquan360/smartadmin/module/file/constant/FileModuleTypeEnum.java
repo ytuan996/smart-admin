@@ -15,7 +15,9 @@ public enum FileModuleTypeEnum implements BaseEnum {
      * path 首字符不能包含\ 或者/
      */
 
-    BACK_USER(1, "backUser/config", "backUser");
+    BACK_USER(1, "backUser/config", "backUser"),
+
+    UPLOAD_ALGORITHM(2, "upload/algorithm", "算法上传");
 
     private Integer value;
 

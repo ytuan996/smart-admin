@@ -52,10 +52,12 @@ public class SwaggerTagConst {
         public static final String MANAGER_EMAIL = "通用-邮件发送";
 
         public static final String MANAGER_HEART_BEAT = "通用-心跳服务";
+
+        public static final String MANAGER_ALGORITHM = "上传算法管理";
     }
 
     /**
-     *  自定义分组2
+     * 自定义分组2
      */
     public static class Group2 {
 

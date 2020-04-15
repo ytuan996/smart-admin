@@ -11,10 +11,7 @@ import lombok.Data;
  */
 @Data
 public class AlgorithmEntity extends BaseEntity {
-    /**
-     * 算法ID
-     */
-    private Long algorithmId;
+
 
     /**
      * 算法名称
@@ -29,7 +26,7 @@ public class AlgorithmEntity extends BaseEntity {
     /**
      * 算法状态(是否通过审核)
      */
-    private String algorithmStatus;
+    private Long isDisable;
 
     /**
      * 算法文件名称
@@ -45,4 +42,9 @@ public class AlgorithmEntity extends BaseEntity {
      * 算法上传路径
      */
     private String algorithmFilepath;
+
+    /**
+     * 创建者
+     */
+    private Long createUser;
 }

@@ -147,7 +147,7 @@ public class SmartSwaggerDynamicGroupConfig implements EnvironmentAware, BeanDef
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(this.serviceApiInfo())
-//                .securitySchemes(securitySchemes())
+                .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts());
     }
 

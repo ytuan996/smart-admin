@@ -61,7 +61,6 @@ public class SensorModelController {
         return sensorModelService.querySensorModelByPage(queryDTO);
     }
 
-
     // 根据机器人ID分页查询
 
 }
